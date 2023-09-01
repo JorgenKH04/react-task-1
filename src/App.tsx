@@ -1,33 +1,35 @@
 import { projects } from "./data/data";
+import { MainLayout } from "./layout/main-layout";
 
-function App() {
+//Set types for project to avoid use of any type
+type projectTypes = {
+  name?: string;
+  info?: string;
+  image?: string;
+};
+
+export default function App() {
   return (
-    <>
-      <h1>Test</h1>
-      <ul>
-        {projects.map((project) => (
-          <ProjectShowcase
-            key={project.key}
-            name={project.name}
-            info={project.info}
-            image={project.image}
-          />
-        ))}
-      </ul>
-    </>
+    <MainLayout>
+      {projects.map(({ key, name, info, image }) => (
+        <ProjectShowcase
+          key={key}
+          name={name}
+          info={info}
+          image={image.default}
+        />
+      ))}
+    </MainLayout>
   );
 }
 
-function ProjectShowcase(props: any) {
-  const { name, info, image } = props;
+function ProjectShowcase({ ...props }: projectTypes) {
+  if (!props.image) return;
   return (
-    <li>
-      <h2>{name}</h2>
-      <h4>{info}</h4>
-      <img src={image.default} alt={name} />
-    </li>
+    <div className="project-card">
+      <h2>{props.name}</h2>
+      <img src={props.image} alt={props.name} />
+      <h4>{props.info}</h4>
+    </div>
   );
 }
-console.log(projects[0].image);
-
-export default App;
