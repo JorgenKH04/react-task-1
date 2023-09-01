@@ -18,7 +18,7 @@ function App() {
   );
 }
 
-function ProjectShowcase(props) {
+function ProjectShowcase(props: any) {
   const { name, info, image } = props;
   return (
     <li>
